@@ -1,0 +1,251 @@
+﻿/*Developed by Surik Pozoyan*/
+html, body{
+    width: 400px;
+    margin: 0;
+    padding: 0;
+    height: max-content;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    font-size: 16px;
+    font-family: 'Roboto', Helvetica, Arial, serif;
+    font-weight: 300;
+}
+
+header {
+    background-color: #f6f7f8;
+    border-bottom: 1px solid #d9d9d9;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 75px;
+}
+
+header .contact-us {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+header .author-img {
+    width: 50px;
+    margin-right: 10px;
+    margin-left: 12px;
+}
+
+header .contact-headline{
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+header .contact-link {
+    font-size: 14px;
+    color: #0074D9;
+    text-decoration: none;
+}
+
+main {
+    padding: 14px;
+    width: calc(100% - 28px);
+}
+
+main .find-and-replace{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 5px;
+    align-items: flex-start;
+    grid-template-rows: 20px 20px 20px;
+}
+
+main .find-and-replace label {
+    cursor: pointer;
+}
+
+.hide-element{
+    display: none;
+}
+.popup-data-error{
+    padding: 10px 20px;
+
+}
+
+.popup-data-success{
+    width: 100%;
+    height: 100%;
+    
+}
+
+main .find-and-replace .find-and-replace-item input[type=text] {
+    border: none;
+    border-bottom: 2px solid #d4d4d4;
+    outline: none;
+
+}
+
+main .find-and-replace .find-and-replace-item-grid-first input {
+    width: 290px;
+}
+
+main .find-and-replace .find-and-replace-item-grid-second input {
+    width: 268px;
+}
+
+main .find-and-replace .find-and-replace-item input[type=text]:focus{
+    border-bottom-color: rgba(0, 103, 244, 0.247);
+}
+
+footer {
+    width: calc(100% - 28px);
+    padding: 4px 14px 14px 14px;
+}
+
+.generate-code-output-value {
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+    display: flex;
+    font-size: 14px;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6f6f6;
+    min-height: 60px;
+    padding: 10px;
+    width: 352px;
+}
+.generate-code-output-value code {
+    width: 350px;
+    cursor: pointer;
+    word-wrap: break-word;
+}
+
+
+.inactive-page-main-container{
+    height: 300px;
+}
+
+.inactive-page-header{
+    background-color: #f6f7f8;
+    border-bottom: 1px solid #d9d9d9;
+    height: 75px;
+    width: 400px;
+}
+
+.inactive-page-image .author-img{
+    width: 50px;
+    margin-right: 10px;
+    margin-left: 12px;
+}
+
+.inactive-page-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 150px;
+    height: 100%;
+}
+
+.inactive-page-list ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    width: 150px;
+    color:#4c4c4c;
+    
+}
+
+.inactive-page-list ul li{
+    cursor: pointer;
+}
+
+.inactive-page-menu{
+    margin-top: 4px;
+}
+
+.inactive-page-name .inactive-page-span{
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+
+.inactive-menu-Activation{
+  border-left: 1px solid #686d76;
+  border-right: 1px solid #686d76;
+  padding: 0 5px;
+}
+.inactive-main-container{
+    padding: 18px 19px;
+}
+.inactive-status-container{
+    display: flex;
+    justify-content: space-between;
+    width: 109px;
+    padding-bottom: 10px;
+}
+.licence-key-input input{
+    margin: 10px 0;
+    background: #fff;
+    color: #525865;
+    border-radius: 4px;
+    border: 1px solid #d1d1d1;
+    box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.07);
+    font-family: inherit;
+    font-size: 1em;
+    line-height: 1.45;
+    outline: none;
+    width: 350px;
+    height: 34px;
+    -webkit-transition: .18s ease-out;
+    -moz-transition: .18s ease-out;
+    -o-transition: .18s ease-out;
+    transition: .18s ease-out;
+    
+}
+.licence-key-input input, input::-webkit-input-placeholder {
+    font-size: 15px;
+    line-height: 3;
+    text-align: left;
+    padding: 0 3px;
+}
+.licence-key-input input:hover {
+    box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.02);
+  }
+.licence-key-input input:focus {
+    color: #4b515d;
+    border: 1px solid #B8B6B6;
+    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0px 0px 8px rgba(0, 0, 0, 0.2);
+  }
+
+.inactive-button{
+    color:#fff;
+    background: rgb(23,38,177);
+    background: linear-gradient(90deg, rgba(23,38,177,1) 0%, rgba(41,60,231,1) 100%);
+    border: none;
+    padding: 5px 7px;
+    border-radius: 5px;
+    outline:none;
+}
+.inactive-button:hover{
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 3px 1px
+}
+.inactive-page-status{
+    color: #bb2205;
+    font-weight: 400;
+}
+.inactive-status-title{
+    color:#686d76;
+    font-weight: 400;
+}
+.licence-key{
+    color:#686d76;
+    font-weight: 400;
+}
+
+.inactive-page-list a{
+    color:#686d76;
+    text-decoration: none;
+    
+}
