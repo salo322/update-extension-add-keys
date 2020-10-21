@@ -54,35 +54,43 @@ chrome.runtime.onMessage.addListener(
     function({messageRequest}, sender, sendResponse) {
      
       if (messageRequest){
-
-       fetch('http://localhost:5000')
-        .then(
-          function(response) {
-              let maxRandom = Math.floor(Math.random() * 2) + 1;
-              console.log(maxRandom)
-            if (maxRandom === 2) {
-              console.log('success:' +
-              response.status)
-              let todaysDate = new Date();
-              tDate = new Date(todaysDate.getFullYear(), todaysDate.getMonth()+1, 1);
-              console.log(tDate)
-              nowDate = tDate.toLocaleDateString("en", {year:"numeric", day:"2-digit", month:"2-digit"})
-              stringDate = nowDate.toString()
-              chrome.storage.local.set({actDate: stringDate});
-              console.log(nowDate)
-              sendResponse({answer: "activeMode"})
+         requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+          
+          fetch(`http://54.216.102.117/key/check-key-valid?key=${messageRequest}`, requestOptions)
+            .then(response =>{
+                if(response.status === 200){
+                  
+   
+                    sendResponse({answer: "activeMode"})
+                }
+                else{
+                    console.log('not true key')
+                    sendResponse({answer: "problem"})
+                }
+                return response.json()
             }
-            else{
-                console.log('not true key')
-                sendResponse({answer: "problem"})
-            }
+            )
+            .then(result =>{
 
-      })
-        .catch(function(err) {
-          console.log('Fetch Error :-S', err);
-        });
+               
+                let test = Number(result.expiration_date);
+        
+                let date = new Date(+test); //NB: use + before variable name
+                
+                console.log(test);
+                let expD = date.toLocaleDateString("en", {year:"numeric", day:"2-digit", month:"2-digit"})
+                console.log(expD);
 
-        return true; 
+                chrome.storage.local.set({expirationDate:expD});
+                
+            }) 
+            
+            .catch(error => console.log('error'));
+
+
       }
-       
+      return true
 });

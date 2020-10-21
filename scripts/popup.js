@@ -1,17 +1,27 @@
 $( document ).ready(function() {
-    chrome.storage.local.get(['active', 'actDate', 'exp'], function(result) {
+    chrome.storage.local.get(['active', 'exp', 'expirationDate'], function(result) {
         console.log(result.actDate)
-      
+        console.log(result.expirationDate)
 
         let todaysDate = new Date();
-        let now = todaysDate.toLocaleDateString("en", {year:"numeric", day:"2-digit", month:"2-digit"})
-        
+        let now = todaysDate.toDateString()
+        console.log(now)
+        console.log(result.expirationDate)
+        let toNum1 = todaysDate.toLocaleDateString("en", {year:"numeric", day:"2-digit", month:"2-digit"})
+        console.log(toNum1)
 
-        let afterMonth = new Date(`${result.actDate}`);
-        dt = new Date(afterMonth.setMonth(afterMonth.getMonth() + 1));
-        let nextM = dt.toLocaleDateString("en", {year:"numeric", day:"2-digit", month:"2-digit"})
+        let toNum2 = result.expirationDate;
+        console.log(toNum2)
 
-        if(nextM >= now){
+        const date1 = new Date(`${toNum1}`);
+        const date2 = new Date(`${toNum2}`);
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        console.log(diffTime + " milliseconds");
+        let daysLeft = diffDays + "  (days left)";
+       
+
+        if(toNum2 !== toNum1){
             if(result.active === 'true'){
                 
                 $('.active-page-tool').css('color', 'blue')
@@ -32,7 +42,7 @@ $( document ).ready(function() {
                 let d = new Date(`${result.actDate}`);
                 dt = new Date(d.setMonth(d.getMonth() + 1));
                 let nextMonth = dt.toLocaleDateString("en", {year:"numeric", day:"2-digit", month:"2-digit"})
-                let expirationDate = $(`<div class="active-expDate"> Expiration Date: ${nextMonth} </div>`)
+                let expirationDate = $(`<div class="active-expDate"> Expiration Date: ${result.expirationDate}      ${  daysLeft} </div>`)
                 $(expirationDate).css('color', '#686d76')
                 $('.inactive-main-div').append(expirationDate)
 
@@ -135,12 +145,12 @@ $( document ).ready(function() {
          $findAndReplaceInputs.on('keyup change', $findAndReplaceInputsEvent);
            }
      
-        }else if(nextM < now){
+        }else {
 
             if(result.exp === 'over'){
                 console.log('true')
                 console.log('equal')
-                chrome.storage.local.remove(['active', 'actDate']);
+                chrome.storage.local.remove(['active']);
                 $('.licence-key').text('Your license key has expired, contact us to buy new License')
                 $('.licence-key').css('color', 'red')
             }
