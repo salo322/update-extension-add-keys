@@ -1,3 +1,4 @@
+var browser = chrome || browser
 
     const init = () => {
         const windowGetSelection = window.getSelection();
@@ -27,14 +28,14 @@
             const data = 'document.querySelector("' + elemSelector + '").innerText' + substrJs + '.trim()';
             const functionVariable = "function(){ var capturedText = " + data + "; return capturedText; }";
 
-            chrome.runtime.sendMessage({message: "variableValue", data: functionVariable});
+            browser.runtime.sendMessage({message: "variableValue", data: functionVariable});
             return
         }
         for (let i = 0; i < matches.length; ++i) {
             if (matches[i] === parent) {
                 const data = 'document.querySelectorAll("' + elemSelector + '")[' + i + "].innerText" + substrJs + '.trim()';
                 const functionVariable = "function(){ var capturedText = " + data + "; return capturedText; }";
-                chrome.runtime.sendMessage({message: "variableValue", data: functionVariable});
+                browser.runtime.sendMessage({message: "variableValue", data: functionVariable});
                 break;
             }
         }
@@ -67,11 +68,11 @@
     try{
         init();
     }catch (e) {
-        chrome.runtime.sendMessage({message: "Error"});
+        browser.runtime.sendMessage({message: "Error"});
     }
 
 
-    chrome.runtime.onMessage.addListener(
+    browser.runtime.onMessage.addListener(
         function({message}, sender, sendResponse) {
             if (message === "checkLoading"){
                 sendResponse('Ok')
@@ -79,7 +80,7 @@
                 try{
                     init();
                 }catch (e) {
-                    chrome.runtime.sendMessage({message: "Error"});
+                    browser.runtime.sendMessage({message: "Error"});
                 }
             }
     });

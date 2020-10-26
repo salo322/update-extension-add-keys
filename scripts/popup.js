@@ -1,33 +1,30 @@
+var browser = chrome || browser
+console.log(browser)
 $( document ).ready(function() {
-    chrome.storage.local.get(['active', 'exp', 'expirationDate'], function(result) {
+    browser.storage.local.get(['active', 'exp', 'expirationDate', 'correctDate', 'wrongDate'], function(result) {
         console.log(result.actDate)
         console.log(result.expirationDate)
-
         let todaysDate = new Date();
-        let now = todaysDate.toDateString()
-        console.log(now)
-        console.log(result.expirationDate)
-        let toNum1 = todaysDate.toLocaleDateString("en", {year:"numeric", day:"2-digit", month:"2-digit"})
+        let toNum1 = todaysDate.toDateString()
         console.log(toNum1)
-
-        let toNum2 = result.expirationDate;
+        let test = result.expirationDate;
+        console.log(test)
+        let newDate = new Date(+test); 
+        console.log(test);
+        let toNum2  = newDate.toDateString()
         console.log(toNum2)
-
         const date1 = new Date(`${toNum1}`);
         const date2 = new Date(`${toNum2}`);
         const diffTime = Math.abs(date2 - date1);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
         console.log(diffTime + " milliseconds");
-        let daysLeft = diffDays + "  (days left)";
-       
+        let daysLeft = "(" +  diffDays + ' ' +"days left)";
 
-        if(toNum2 !== toNum1){
-            if(result.active === 'true'){
-                
+            if(result.active === 'true' && result.correctDate === 'true'){
+                console.log('works...')      
                 $('.active-page-tool').css('color', 'blue')
                 $('.inactive-menu-Activation span').css('color','#686d76')
                 $('.inactive-page-main-container').addClass('hide-element')
-    
                 $('.inactive-menu-Activation').click(()=>{
                 $('.popup-data-success').addClass('hide-element') 
                 $('.inactive-page-main-container').removeClass('hide-element')
@@ -36,19 +33,10 @@ $( document ).ready(function() {
                 $('.inactive-page-status').text('Active')
                 $('.inactive-page-status').css('color', 'green')
                 $('.inactive-status-container').css('width', '99px') 
-                let activationDate = $(`<div class="active-activeDate">Activation Date: ${result.actDate} </div>`)
-                $('.activation-date-add').css('display', 'flex')
-                $(activationDate).css('color', '#686d76')
-                let d = new Date(`${result.actDate}`);
-                dt = new Date(d.setMonth(d.getMonth() + 1));
-                let nextMonth = dt.toLocaleDateString("en", {year:"numeric", day:"2-digit", month:"2-digit"})
-                let expirationDate = $(`<div class="active-expDate"> Expiration Date: ${result.expirationDate}      ${  daysLeft} </div>`)
+                let expirationDate = $(`<div class="active-expDate"> Expiration Date: ${toNum2 }      ${  daysLeft} </div>`)
                 $(expirationDate).css('color', '#686d76')
                 $('.inactive-main-div').append(expirationDate)
-
-                
                 $('.active-expDate').nextAll('div').remove();
-
                 $('.licence-key').css('display', 'none')
                 $('.inactive-page-input').prop('disabled', true);
                 $('.inactive-page-input').val('') 
@@ -70,7 +58,7 @@ $( document ).ready(function() {
      
          let receivedValue;
      
-         let port = chrome.extension.connect({
+         let port = browser.runtime.connect({
              name: "VariableBuilder"
          });
      
@@ -143,37 +131,28 @@ $( document ).ready(function() {
          };
      
          $findAndReplaceInputs.on('keyup change', $findAndReplaceInputsEvent);
-           }
-     
-        }else {
-
-            if(result.exp === 'over'){
-                console.log('true')
-                console.log('equal')
-                chrome.storage.local.remove(['active']);
+           }else if(result.exp === 'over' && result.wrongDate === 'false'){
+            browser.storage.local.remove(['active', 'correctDate', 'licenseKey','expirationDate']);    
+               console.log('not correct date')
                 $('.licence-key').text('Your license key has expired, contact us to buy new License')
                 $('.licence-key').css('color', 'red')
-            }
-            console.log('false')
             
-
-        }
+           }
 
             $('.popup-data-error').addClass('hide-element')
             $('.popup-data-success').addClass('hide-element')
-
     })
  
     $(".inactive-button" ).click(function() {
         if($('.inactive-page-input').val().length > 1){
             let value = $('.inactive-page-input').val();
-            chrome.runtime.sendMessage({messageRequest: value}, function(response) {
+            browser.runtime.sendMessage({messageRequest: value}, function(response) {
             if(response.answer === 'activeMode'){
 
             $('.active-page-tool').click(()=>{
             $('.inactive-page-main-container').addClass('hide-element')
             $('.popup-data-error').removeClass('hide-element')
-            chrome.storage.local.set({active: 'true', exp : 'over'});
+            browser.storage.local.set({active: 'true', exp : 'over'});
             })
             $('.active-page-tool').trigger('click')
             } else if(response.answer === 'problem'){
@@ -191,3 +170,4 @@ $( document ).ready(function() {
     });
 
 });
+
