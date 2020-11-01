@@ -74,7 +74,7 @@ main .find-and-replace label {
 .popup-data-success{
     width: 100%;
     height: auto !important;
-    min-width: 300px; 
+    min-height: 300px; 
 }
 
 main .find-and-replace .find-and-replace-item input[type=text] {
